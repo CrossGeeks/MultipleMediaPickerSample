@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:vm="clr-namespace:MultiMediaPickerSample.ViewModels" x:Class="MultiMediaPickerSample.MainPage"
+             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             ios:Page.UseSafeArea="true">
+    <ContentPage.Content>
+         <StackLayout Padding="20">
+
+         <Button TextColor="White" BackgroundColor="Blue" Text="Select images from gallery" Command="{Binding SelectImagesCommand}"/>
+         <Button TextColor="White" BackgroundColor="Blue" Text="Select videos from gallery" Command="{Binding SelectVideosCommand}"/>
+        
+         <flv:FlowListView FlowColumnCount="3" x:Name="listItems" FlowItemsSource="{Binding Media}"
+                        SeparatorVisibility="None"
+                        HasUnevenRows="false" RowHeight="100" >
+                    <flv:FlowListView.FlowColumnTemplate>
+                        <DataTemplate >
+                            <Grid>
+                               <ffimageloading:CachedImage  DownsampleToViewSize="true" HeightRequest="100"  Source="{Binding PreviewPath}"  Aspect="AspectFill" HorizontalOptions="FillAndExpand">
+                               </ffimageloading:CachedImage>
+                               <Image Source="play" IsVisible="false" HorizontalOptions="End" VerticalOptions="End">
+                                   <Image.Triggers>
+                                        <DataTrigger TargetType="Image" Binding="{Binding Type}" Value="Video">
+                                             <Setter Property="IsVisible" Value="True" />
+                                        </DataTrigger>
+                                    </Image.Triggers>
+                               </Image>
+                            </Grid>
+                        </DataTemplate>
+                    </flv:FlowListView.FlowColumnTemplate>
+            </flv:FlowListView>
+        </StackLayout>
+    </ContentPage.Content>
+  
+</ContentPage>
